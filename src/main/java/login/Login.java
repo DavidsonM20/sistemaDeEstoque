@@ -42,7 +42,7 @@ public class Login extends HttpServlet{
             ResultSet rs = stmt.executeQuery();
             
             if(rs.next()){
-                response.sendRedirect("dashboard.html");
+                response.sendRedirect("pages/dashboard.html");
             }else {
                 out.println("<h2>Dados incorretos.</h2>");
             }
