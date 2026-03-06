@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="../css/reset.css"/>
-        <link rel="stylesheet" href="../css/cores.css"/>
+        <link rel="stylesheet" href="../CSS/reset.css"/>
+        <link rel="stylesheet" href="../CSS/color.css"/>
+         <link rel="stylesheet" href="../CSS/dashboard.css"/>
         <title>Dashboard</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,28 +35,28 @@
             </section>
             <section id="filtro">
                 <div class="grupo-filtro">
-                    <label>Data</label>
-                    <input type="date" >
+                    <label for="filtroData">Data</label>
+                    <input type="date" id="filtroData" class="input-filtro" >
                 </div>
-                <div>
-                    <label>Tipo</label>
-                    <select>
-                        <option>Selecione uma opçao</option>
-                        <option>Entrada</option>
-                        <option>Saída</option>
+                <div class="grupo-filtro">
+                    <label for="tipoMovimentacao">Tipo</label>
+                    <select id="tipoMovimentacao" class="select-filtro">
+                        <option value="">Selecione uma opçao</option>
+                        <option value="entrada">Entrada</option>
+                        <option value="saida">Saída</option>
                     </select>
                 </div>
-                <div>
-                    <label>Pesquisar item</label>
-                    <input type="text" placeholder="Digite o nome do produto" >
+                <div class="grupo-filtro pesquisa-nome">
+                    <label for="pesquisarNome">Pesquisar item</label>
+                    <input type="text" id="pesquisarNome" class="input-filtro" placeholder="Digite o nome do produto" >
                 </div>
-                <div>
-                    <button>Perquisar</button>
+                <div class="grupo-filtro botao-pesquisa">
+                    <button id="btnPesquisa" class="btn-pesquisa">Perquisar</button>
                 </div>
             </section>
-            <section>
-                <div>
-                    <table>
+            <section id="tabelaEstoqueContainer">
+                <div class="tabela-wrapper">
+                    <table id="tabelaEstoque">
                         <thead>
                             <tr>
                                 <th>Código de barras</th>
@@ -67,8 +68,8 @@
                                 <th>Totaç</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
+                        <tbody id="corpoTabela">
+                            <tr class="linha-item">
                                 <td>123456789</td>
                                 <td>Mouse</td>
                                 <td>Logitech</td>
@@ -77,7 +78,7 @@
                                 <td>R$80,00</td>
                                 <td>R$800,00</td>
                             </tr>
-                            <tr>
+                            <tr class="linha-item">
                                 <td>123456789</td>
                                 <td>Cadeira</td>
                                 <td>Shark</td>
@@ -90,19 +91,19 @@
                     </table>
                 </div>
             </section>
-            <<section>
-                <div>
-                    <label>Página</label>
-                    <select>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
+            <<section id="paginacao">
+                <div class="controle-paginacao">
+                    <label for="pagina">Página</label>
+                    <select id="pagina">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
                     </select>
                 </div>
-                <div>
-                    <button>Voltar</button>
-                    <button>Próximo</button>
+                <div class="conteiner-btn">
+                    <button id="btnVoltar" class="btn-voltar">Voltar</button>
+                    <button id="btnProximo" class="btn-proximo">Próximo</button>
                 </div>
             </section>
         </main>
