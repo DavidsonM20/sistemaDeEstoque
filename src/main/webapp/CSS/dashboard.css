@@ -112,3 +112,41 @@ body {
     background-color: var(--primary-medium);
     color: var(--white);
 }
+
+
+#paginacao {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.controle-paginacao label {
+    font-size: 15px;
+    color: var(--primary-dark);
+}
+
+#pagina {
+    border: 1px solid var(--primary-medium);
+    border-radius: var(--primary-medium);
+}
+
+.conteiner-btn
+.btn-voltar,
+.btn-proximo {
+    margin-top: 0px;
+    padding: 5px 8px;
+    background-color: var(--primary-medium);
+    color: var(--white);
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.conteiner-btn
+#btnVoltar
+#btnProximo:hover {
+    background-color: var(--primary-dark);
+}
