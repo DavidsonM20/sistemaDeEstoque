@@ -1,60 +1,77 @@
-body {
-    height: 90vh;
-    background: linear-gradient(150deg, var(--primary-dark), var(--primary-medium));
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Limpeza total de margens e bordas */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* ISSO IMPEDE O INPUT DE SAIR DA CAIXA */
 }
 
-/*conteiner principal*/
+body {
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(150deg, #0f4c75, #3282b8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+header h1 {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
 .container {
-   background-color: var(--while);
-   padding: 40px;
-   width: 350px;
-   box-shadow: 0px 8px 25px var(--shadow-default);
-   border-radius: 25px;
+    background-color: white; /* Verifique se no color.css é --white */
+    width: 350px;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
 form {
-   background-color: var(--primary-light);
-   border-radius: 20px;
+    background-color: #bbe1fa; /* var(--primary-light) */
+    border-radius: 15px;
+    padding: 20px;
+    width: 100%; /* Ocupa o espaço da container */
+    display: block; /* Garante comportamento de bloco */
 }
 
-
-h1 {
+.content h2 {
     text-align: center;
-    margin-bottom: 20px;
+    color: #0f4c75;
+    margin-bottom: 15px;
 }
 
+.input-box {
+    width: 100%;
+    margin-bottom: 10px;
+}
 
+label {
+    display: block;
+    color: #0f4c75;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
 
 input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border-radius: 15px;
-    border: 1px solid var(--gray-medium);
-    transition: 0.3s;
-}
-
-input:focus{
-    border-color: var(--primary-medium);
-    outline: none;
-    box-shadow: 0 0 5px var(--primary-medium)
+    width: 100%; /* Com o box-sizing: border-box, ele não vai entortar */
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    display: block;
 }
 
 button {
     width: 100%;
-    padding: 10px;
-    background-color: var(--success);
+    padding: 12px;
+    margin-top: 15px;
+    background-color: #1b9c85;
+    color: white;
     border: none;
-    border-radius: 15px;
-    color: var(--white);
-    font-size: 15px;
+    border-radius: 10px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.3s;
-}
-button:hover {
-    background-color: var(--success-hover);
 }
