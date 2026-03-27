@@ -13,7 +13,7 @@ body {
     margin-bottom: 20px;
 }
 
-#tituloCadastro {
+#tituloCadastro{
     font-size: 22px;
     color: var(--primary-dark);
 }
@@ -39,7 +39,7 @@ nav a:hover {
     justify-content: center;
 }
 
-.container {
+.container{
     background-color: var(--white);
     padding: 30px;
     border-radius: 10px;
@@ -93,7 +93,7 @@ select:focus {
 
 .btn button {
     padding: 12px 30px;
-    background-color:  var(--sucess);
+    background-color: var(--success);
     color: var(--white);
     border: none;
     border-radius: 8px;
@@ -103,8 +103,5 @@ select:focus {
 }
 
 .btn button:hover {
-    background-color: var(--sucess-hover);
-    
+    background-color: var(--success-hover);
 }
-
-
