@@ -17,31 +17,31 @@ public class CadastroController extends HttpServlet{
         
         CadastroUsuarioModel user = new CadastroUsuarioModel();
         
-        user.setNome(request.getParameter("nome"));
-        user.setSobrenome(request.getParameter("sobrenome"));
+        user.setNome(request.getParameter("nameFirst"));
+        user.setSobrenome(request.getParameter("sobreNome"));
         user.setMatricula(request.getParameter("matricula"));
         user.setCpf(request.getParameter("cpf"));
-        user.setSexo(request.getParameter("sexo"));
+        user.setSexo(request.getParameter("opcao"));
         user.setData(request.getParameter("dtaNascimento"));
         user.setEmail(request.getParameter("email"));
         user.setTelefone(request.getParameter("telefone"));
         user.setNomeUsuario(request.getParameter("usuario"));
         user.setSenha(request.getParameter("senha"));
         user.setFuncao(request.getParameter("funcao"));
-        user.setCep(Long.parseLong(request.getParameter("cep")));
+        user.setCep(request.getParameter("cep"));
         user.setEndereco(request.getParameter("endereco"));
         user.setCidade(request.getParameter("cidade"));
         user.setBairro(request.getParameter("bairro"));
         user.setEstado(request.getParameter("estado"));
-        user.setNumero(Long.parseLong(request.getParameter("numero")));
+        user.setNumero(Long.parseLong((request.getParameter("numero"))));
         user.setComplemento(request.getParameter("complemento"));
         
         CadastroUsersDAO dao = new CadastroUsersDAO();
         
         if(dao.cadastrar(user)) {
-            response.sendRedirect("pages/dashboard.html");
+            response.sendRedirect("dashboard.html");
         } else {
-            response.sendRedirect("pages/cadastro.html");
+            response.sendRedirect("cadastro.html");
         }
     }
 }    
