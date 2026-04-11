@@ -14,7 +14,7 @@ FROM tomcat:11.0-jdk25-temurin
 
 run rm -rf /usr/local/tomcat/webpages/*
 
-copy --from=build /app/target/*.war /user/local/tomcat/webapps/ROOT.war
+copy --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 
 EXPOSE 8080
 

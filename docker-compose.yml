@@ -13,7 +13,13 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-
+      
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "root", "-pcimatec"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+ 
   app:
     build: .
     container_name: app-estoque
