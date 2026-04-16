@@ -22,6 +22,18 @@ CREATE TABLE users (
     estado CHAR(2)
 );
 
+create table produtos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    codigo_barras VARCHAR(100) NOT NULL,
+    nome_produto VARCHAR(255) NOT NULL,
+    fabricante VARCHAR(255),
+    marca VARCHAR(255),
+    data_fabricacao DATE,
+    data_vencimento DATE,
+    quantidade BIGINT,
+    valor DECIMAL(10,2),
+    total DECIMAL(10,2)
+);
 
 INSERT INTO users (username,namefirst,sobreNome,matricula,CPF,psw,sexo,dtaNascimento,email,telefone,funcao,cep,endereco,numero,complemento, 
     bairro,cidade,estado
