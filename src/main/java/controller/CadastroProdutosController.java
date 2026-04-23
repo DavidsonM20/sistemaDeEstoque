@@ -33,7 +33,7 @@ public class CadastroProdutosController extends HttpServlet {
         if (dao.salvar(produto)) {
             response.sendRedirect("pages/dashboard.html");
         } else {
-            response.sendRedirect("pages/erro.html");
+            response.sendRedirect("pages/cadastroProdutos.html");
         }
     }
 }
