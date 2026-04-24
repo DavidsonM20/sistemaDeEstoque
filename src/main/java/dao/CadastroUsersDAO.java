@@ -3,43 +3,42 @@ package dao;
 import connection.ConnectionFactory;
 import java.sql.PreparedStatement;
 import model.CadastroUsuarioModel;
+import util.SenhaUtil;
 
 public class CadastroUsersDAO {
 
     public boolean cadastrar(CadastroUsuarioModel user) {
-        // Corrigido: VALUES com 'S' e ordem mapeada corretamente
-        String sql = "INSERT INTO users " +
-                "(username, namefirst, sobreNome, matricula, CPF, psw, sexo, dtaNascimento, email, telefone, funcao, cep, endereco, numero, complemento, bairro, cidade, estado) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (username, namefirst, sobreNome, matricula, CPF, psw, sexo, dtaNascimento, email, telefone, funcao, cep, endereco, numero, complemento, bairro, cidade, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (var con = ConnectionFactory.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement(sql);
+        // stmt dentro do try garante que ele feche sozinho mesmo se der erro
+        try (var con = ConnectionFactory.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
 
-            // A ordem aqui segue EXATAMENTE a ordem dos parênteses da String SQL acima
-            stmt.setString(1, user.getNomeUsuario()); // username
-            stmt.setString(2, user.getNome());        // namefirst
-            stmt.setString(3, user.getSobrenome());   // sobreNome
-            stmt.setString(4, user.getMatricula());   // matricula
-            stmt.setString(5, user.getCpf());         // CPF
-            stmt.setString(6, user.getSenha());       // psw
-            stmt.setString(7, user.getSexo());        // sexo
-            stmt.setString(8, user.getData());        // dtaNascimento
-            stmt.setString(9, user.getEmail());       // email
-            stmt.setString(10, user.getTelefone());   // telefone
-            stmt.setString(11, user.getFuncao());     // funcao
-            stmt.setString(12, user.getCep());        // cep
-            stmt.setString(13, user.getEndereco());   // endereco
-            stmt.setLong(14, user.getNumero());       // numero
-            stmt.setString(15, user.getComplemento());// complemento
-            stmt.setString(16, user.getBairro());     // bairro
-            stmt.setString(17, user.getCidade());     // cidade
-            stmt.setString(18, user.getEstado());     // estado
+            String senhaHash = SenhaUtil.gerarHash(user.getSenha());
+
+            stmt.setString(1, user.getNomeUsuario());
+            stmt.setString(2, user.getNome());
+            stmt.setString(3, user.getSobrenome());
+            stmt.setString(4, user.getMatricula());
+            stmt.setString(5, user.getCpf());
+            stmt.setString(6, senhaHash);
+            stmt.setString(7, user.getSexo());
+            stmt.setString(8, user.getData()); // Certifique-se que o formato é AAAA-MM-DD
+            stmt.setString(9, user.getEmail());
+            stmt.setString(10, user.getTelefone());
+            stmt.setString(11, user.getFuncao());
+            stmt.setString(12, user.getCep());
+            stmt.setString(13, user.getEndereco());
+            stmt.setLong(14, user.getNumero());
+            stmt.setString(15, user.getComplemento());
+            stmt.setString(16, user.getBairro());
+            stmt.setString(17, user.getCidade());
+            stmt.setString(18, user.getEstado());
 
             stmt.executeUpdate();
             return true;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Erro ao cadastrar: " + e.getMessage());
             return false;
         }
     }

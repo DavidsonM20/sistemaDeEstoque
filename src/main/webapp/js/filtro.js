@@ -1,5 +1,6 @@
 async function filtroEstoque() {
     try {
+        const url = `http://localhost:8080/api/estoque?nome=${encodeURIComponent(nome)}&tipo=${encodeURIComponent(tipo)}&data=${encodeURIComponent(data)}`;
         const response = await fetch("http://localhost:8080/api/estoque");
         const dados = await response.json();
 
@@ -39,3 +40,6 @@ async function filtroEstoque() {
         console.erro("Erro ao filtrar", erro);
     }
 }
+
+document.getElementById("btnPesquisar")
+        .addEventListener("click", filtroEstoque);
