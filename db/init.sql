@@ -41,3 +41,4 @@ INSERT INTO users (username,namefirst,sobreNome,matricula,CPF,psw,sexo,dtaNascim
 ) VALUES ('admin','Davidson','Miranda','ADM-001','000.000.000-00','1234','Masculino','2005-03-11','admin@sistema.com','(11) 99999-9999', 
           'Administrador','01000-000','Avenida Principal','100','Sala 01','Centro','São Paulo','SP'
 );
+

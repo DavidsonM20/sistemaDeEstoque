@@ -38,7 +38,7 @@ public class CadastroUsersDAO {
             return true;
 
         } catch (Exception e) {
-            System.err.println("Erro ao cadastrar: " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }

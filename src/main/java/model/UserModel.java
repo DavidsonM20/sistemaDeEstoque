@@ -5,7 +5,8 @@ public class UserModel {
     
     private int id; 
     private String username;
-    private String passwords;
+    private String password;
+    private String funcao;
     
     public UserModel(){
         
@@ -19,9 +20,17 @@ public class UserModel {
     }
     
     public String getPassword() {
-        return passwords;
+        return password;
     }
-    public void settPassword(String passwords){
-        this.passwords = passwords;
+    public void setPassword(String password){
+        this.password = password;
+    }
+    
+    
+     public String getFuncao() {
+        return funcao;
+    }
+    public void setFuncao(String funcao){
+        this.funcao = funcao;
     }
 }

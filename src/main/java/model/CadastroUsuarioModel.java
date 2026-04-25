@@ -26,10 +26,6 @@ public class CadastroUsuarioModel {
 
     // --- Getters e Setters Corrigidos ---
 
-    public int getId() { return id; }
-    
-    public void setId(int id) { this.id = id; }
-
     public String getNomeUsuario() { return username; }
     
     public void setNomeUsuario(String username) { this.username = username; }
