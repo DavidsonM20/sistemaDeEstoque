@@ -2,10 +2,10 @@ async function carregarEstoque() {
     try {
         const response = await fetch("http://localhost:8080/api/estoque");
         const dados = await response.json();
-        
+
         const tabela = document.getElementById("corpoTabela");
         tabela.innerHTML = "";
-        
+
         dados.forEach(item => {
             const linha = `
                     <tr>
@@ -25,7 +25,7 @@ async function carregarEstoque() {
         });
     } catch (erro) {
         console.log("Erro ao carregar os produtos.", erro);
-        
+
     }
 
 }
@@ -34,7 +34,7 @@ async function carregarResumo() {
     try {
         const response = await fetch("http://localhost:8080/api/resumo");
         const dados = await response.json();
-        
+
         document.getElementById("cardEntrada").innerHTML = dados.entrada;
         document.getElementById("cardSaida").innerHTML = dados.saida;
         document.getElementById("cardTotal").innerHTML = dados.total;
@@ -47,6 +47,6 @@ async function carregarResumo() {
 window.onload = () => {
     carregarEstoque();
     carregarResumo();
-}
+};
 
 

@@ -8,14 +8,14 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/api/perfil")
-public class PerfilController extends HttpServlet{
-    
+public class PerfilController extends HttpServlet {
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         HttpSession session = request.getSession(false);
-        
+
         String perfil = (String) session.getAttribute("perfil");
-        
+
         response.setContentType("application/json");
         response.getWriter().write("{\"perfil\":\"" + perfil + "\"}");
     }

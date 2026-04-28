@@ -20,30 +20,30 @@ public class AuthFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        
+
         HttpSession session = req.getSession(false);
-        
+
         String uri = req.getRequestURI();
-        
-        if(uri.contains("index.html") || uri.contains("Login")
-            || uri.contains("CSS") || uri.contains("js")){
+
+        if (uri.contains("index.html") || uri.contains("login")
+                || uri.contains("CSS") || uri.contains("js")) {
             chain.doFilter(request, response);
-            
+
             return;
         }
-        
-        if(session == null || session.getAttribute("usuario") == null) {
-            res.sendRedirect(req.getContextPath()+  "/index.html");
+
+        if (session == null || session.getAttribute("usuario") == null) {
+            res.sendRedirect(req.getContextPath() + "/index.html");
             return;
         }
-        
+
         String perfil = (String) session.getAttribute("perfil");
-        
-        if(uri.contains("cadastro") && !"ADMIN".equals("perfil")){
+
+        if (uri.contains("cadastro") && !"ADMIN".equals(perfil)) {
             res.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
         }
-        
+
         chain.doFilter(request, response);
     }
 

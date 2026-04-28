@@ -18,10 +18,9 @@ public class EstoqueController extends HttpServlet {
         String nome = request.getParameter("nome");
         String tipo = request.getParameter("tipo");
         String data = request.getParameter("data");
-        
-        
+
         CadastroProdutosDAO dao = new CadastroProdutosDAO();
-        List<CadastroProdutoModel> lista = dao.listarComFiltro(nome,tipo,data);
+        List<CadastroProdutoModel> lista = dao.listarComFiltro(nome, tipo, data);
 
         String json = new Gson().toJson(lista);
 

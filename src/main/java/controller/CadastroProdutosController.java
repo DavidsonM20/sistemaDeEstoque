@@ -12,7 +12,7 @@ import model.CadastroProdutoModel;
 @WebServlet("/cadastroProdutos")
 public class CadastroProdutosController extends HttpServlet {
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) 
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         CadastroProdutoModel produto = new CadastroProdutoModel();
@@ -32,7 +32,7 @@ public class CadastroProdutosController extends HttpServlet {
 
         if (dao.salvar(produto)) {
             response.sendRedirect("pages/dashboard.html");
-        } else {
+        }else{
             response.sendRedirect("pages/cadastroProdutos.html");
         }
     }

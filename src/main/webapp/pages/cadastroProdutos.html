@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
     <head>
         <link rel="stylesheet" href="../CSS/reset.css" />
         <link rel="stylesheet" href="../CSS/color.css" />
@@ -10,7 +10,7 @@
     </head>
     <body>
         <header id="header">
-            <h1 id="tituloCadastro">Sistema de estoque</h1>
+            <h1 id="tituloCadastro">Sistema de Estoque</h1>
             <nav id="menu">
                 <ul class="menu-lista">
                     <li><a href="dashboard.html">Início</a></li>
@@ -20,62 +20,81 @@
             </nav>
         </header>
         <main>
-            <section id ="form-container">
+            <section id="form-container">
                 <form action="../cadastroProdutos" method="POST" id="formCadastro">
+
                     <div class="linha-form">
-                        <label for="codigoBarras">Código de Barras</label>
-                        <input type="text" name="codigoBarras" required />
+                        <div class="grupo-form">
+                            <label for="codigoBarras">Código de Barras</label>
+                            <input type="text" name="codigoBarras" id="codigoBarras" required />
+                        </div>
                     </div>
 
                     <div class="grupo-form">
-                        <label for="nomeProduto" >Nome do Produto</label>
-                        <input type="text" name="nomeProduto" required />
+                        <label for="nomeProduto">Nome do Produto</label>
+                        <input type="text" name="nomeProduto" id="nomeProduto" required />
                     </div>
 
                     <div class="linha-form">
-                        <label for="fabricante" >Fabricante</label>
-                        <input type="text" name="fabricante" required />
-                    </div>
-
-                    <div class="grupo-form">
-                        <label for="marca" >Marca</label>
-                        <input type="text" name="marca" required />
-                    </div>
-                    <div class="linha-form">
                         <div class="grupo-form">
-                            <label for="dataFabricacao" >Data de Fabricação</label>
-                            <input type="date" name="dataFabricacao" required />
+                            <label for="fabricante">Fabricante</label>
+                            <input type="text" name="fabricante" id="fabricante" required />
                         </div>
 
                         <div class="grupo-form">
-                            <label for="dataVencimento" >Data de Vencimento</label>
-                            <input type="date" name="dataVencimento" required />
+                            <label for="marca">Marca</label>
+                            <input type="text" name="marca" id="marca" required />
                         </div>
                     </div>
+
                     <div class="linha-form">
                         <div class="grupo-form">
-                            <label for="quantidade" >Quantidade</label>
-                            <input type="number" name="quantidade" id="quantidade" />
+                            <label for="dataFabricacao">Data de Fabricação</label>
+                            <input type="date" name="dataFabricacao" id="dataFabricacao" required />
                         </div>
 
                         <div class="grupo-form">
-                            <label for="valor" >Valor Unitário</label>
-                            <input type="number" name="valor" id="valor" />
+                            <label for="dataVencimento">Data de Vencimento</label>
+                            <input type="date" name="dataVencimento" id="dataVencimento" required />
                         </div>
                     </div>
+
                     <div class="linha-form">
-                        <div class="grupo-form full">
-                            <label>Total</label>
-                            <input type="number" name="total" id="total" />
+                        <div class="grupo-form">
+                            <label for="quantidade">Quantidade</label>
+                            <input type="number" name="quantidade" id="quantidade" required />
+                        </div>
+
+                        <div class="grupo-form">
+                            <label for="valor">Valor Unitário</label>
+                            <input type="number" step="0.01" name="valor" id="valor" required />
                         </div>
                     </div>
+
+                    <div class="linha-form">
+                        <div class="grupo-form">
+                            <label for="total">Total</label>
+                            <input type="number" step="0.01" name="total" id="total" readonly />
+                        </div>
+
+                        <div class="grupo-form">
+                            <label for="status">Status</label>
+                            <select name="status" id="status" required>
+                                <option value="">Selecione...</option>
+                                <option value="ENTRADA">Entrada</option>
+                                <option value="SAIDA">Saída</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="acoes-form">
-                        <button type="submit" class="btn-salvar">Salvar</button>
+                        <button type="submit" class="btn-salvar">Salvar Produto</button>
                         <a href="dashboard.html" class="btn-cancelar">Cancelar</a>
                     </div>
                 </form>
             </section>
         </main>
+
         <script src="../js/CadastroProdutos.js"></script>
     </body>
 </html>

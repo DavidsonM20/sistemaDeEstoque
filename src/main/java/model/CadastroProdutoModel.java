@@ -1,15 +1,14 @@
 package model;
 
-
 public class CadastroProdutoModel {
-    
+
     private int id;
     private String codigoBarras;
     private String nomeProduto;
     private String fabricante;
     private String marca;
     private String dataFabricacao;
-    private String dataVencimento;       
+    private String dataVencimento;
     private long quantidade;
     private String valor;
     private String total;
@@ -86,8 +85,8 @@ public class CadastroProdutoModel {
     public void setTotal(String total) {
         this.total = total;
     }
-    
-   public String getStatus() {
+
+    public String getStatus() {
         return status;
     }
 
