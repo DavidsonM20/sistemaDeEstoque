@@ -12,11 +12,19 @@ import model.CadastroProdutoModel;
 public class CadastroProdutosDAO {
 
     public boolean salvar(CadastroProdutoModel produto) {
-        String sql = "INSERT INTO produtos"
-                + "(codigo_barra, nome_produto, fabricante, marca, data_fabricacao, data_vencimento, quantidade, valor, total, status )"
-                + "VALUE(?,?,?,?,?,?,?,?,?,?)";
 
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        // VALIDAÇÃO: garantir que código de barras não é nulo
+        if (produto.getCodigoBarras() == null || produto.getCodigoBarras().trim().isEmpty()) {
+            System.err.println("ERRO: Tentativa de salvar produto sem código de barras!");
+            return false;
+        }
+
+        String sql = "INSERT INTO produtos "
+                + "(codigo_barras, nome_produto, fabricante, marca, data_fabricacao, data_vencimento, quantidade, valor, total, status) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = ConnectionFactory.getConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, produto.getCodigoBarras());
             stmt.setString(2, produto.getNomeProduto());
@@ -29,8 +37,9 @@ public class CadastroProdutosDAO {
             stmt.setString(9, produto.getTotal());
             stmt.setString(10, produto.getStatus());
 
-            stmt.executeUpdate();
-            return true;
+            int rowsAffected = stmt.executeUpdate();
+            System.out.println("Linhas afetadas no INSERT: " + rowsAffected);
+            return rowsAffected > 0;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -44,7 +53,7 @@ public class CadastroProdutosDAO {
         StringBuilder sql = new StringBuilder("SELECT * FROM produtos WHERE 1=1");
 
         if (nome != null && !nome.isEmpty()) {
-            sql.append(" AND LOWER (nome produto) LIKE ?");
+            sql.append(" AND LOWER(nome_produto) LIKE ?");
         }
         if (tipo != null && !tipo.isEmpty()) {
             sql.append(" AND status = ?");
@@ -53,16 +62,19 @@ public class CadastroProdutosDAO {
             sql.append(" AND data_fabricacao = ?");
         }
 
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
+        try (Connection conn = ConnectionFactory.getConnection(); 
+                PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
 
             int index = 1;
 
             if (nome != null && !nome.isEmpty()) {
                 stmt.setString(index++, "%" + nome.toLowerCase() + "%");
             }
+            
             if (tipo != null && !tipo.isEmpty()) {
                 stmt.setString(index++, tipo);
             }
+            
             if (data != null && !data.isEmpty()) {
                 stmt.setString(index++, data);
             }
@@ -72,10 +84,20 @@ public class CadastroProdutosDAO {
             while (rs.next()) {
                 CadastroProdutoModel p = new CadastroProdutoModel();
 
-                p.setCodigoBarras(rs.getString("codigo_barras"));
+                String codigo = rs.getString("codigo_barras");
+                System.out.println("Lendo código do banco: " + codigo); // DEBUG
+                
+                p.setCodigoBarras(codigo);
                 p.setNomeProduto(rs.getString("nome_produto"));
                 p.setFabricante(rs.getString("fabricante"));
                 p.setMarca(rs.getString("marca"));
+                
+                // TRATAMENTO para datas nulas
+                java.sql.Date dataFab = rs.getDate("data_fabricacao");
+                java.sql.Date dataVen = rs.getDate("data_vencimento");
+                p.setDataFabricacao(dataFab != null ? dataFab.toLocalDate().toString() : "");
+                p.setDataVencimento(dataVen != null ? dataVen.toLocalDate().toString() : "");
+                
                 p.setQuantidade(rs.getLong("quantidade"));
                 p.setValor(rs.getString("valor"));
                 p.setTotal(rs.getString("total"));

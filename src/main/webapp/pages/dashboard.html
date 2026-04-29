@@ -14,7 +14,7 @@
             <nav id="menu">
                 <ul class="menu-lista">
                     <li><a href="dashboard.html">Início</a></li>
-                    <li><a href="#">Gerenciamento</a></li>
+                    <li><a href="dashboard.html">Gerenciamento</a></li>
                     <li><a href="cadastro.html" class="btn-menu">Cadastro</a></li>
                     <li><a href="#" id="btnLogout">Sair</a></li>
                 </ul>
@@ -24,19 +24,20 @@
             <section id="resumoEstoque">
                 <div class="card-resumo">
                     <h3 class="titulo-card">Entrada</h3>
-                    <p class="valor-card" id="cardEntrada">0</p>
+                    <p id="cardEntrada" class="valor-card">0</p>
                 </div>
 
                 <div class="card-resumo">
                     <h3 class="titulo-card">Saída</h3>
-                    <p class="valor-card" id="cardSaida">0</p>
+                    <p id="cardSaida" class="valor-card">0</p>
                 </div>
 
                 <div class="card-resumo">
                     <h3 class="titulo-card">Total</h3>
-                    <p class="valor-card" id="cardTotal">0</p>
+                    <p id="cardTotal" class="valor-card">0</p>
                 </div>
             </section>
+
             <section id="filtro">
                 <div class="grupo-filtro">
                     <label for="filtroData">Data</label>
@@ -55,12 +56,13 @@
                     <input type="text" id="pesquisarNome" class="input-filtro" placeholder="Digite o nome do produto">
                 </div>
                 <div class="grupo-filtro botao-pesquisa">
-                    <button id="btnPesquisar" class="btn-pesquisa">Pesquisar</button>
+                    <button type="button" id="btnPesquisar" class="btn-pesquisar">Pesquisar</button>
                 </div>
                 <div class="topo-tabela">
                     <a href="cadastroProdutos.html" class="btn-add">+</a>
                 </div>
             </section>
+
             <section id="tabelaEstoqueContainer">
                 <div class="tabela-wrapper">
                     <table id="tabelaEstoque">
@@ -70,6 +72,8 @@
                                 <th>Nome</th>
                                 <th>Fabricante</th>
                                 <th>Marca</th>
+                                <th>Data Fabricação</th>
+                                <th>Data Vencimento</th>
                                 <th>Quantidade</th>
                                 <th>Valor unitário</th>
                                 <th>Total</th>
@@ -77,11 +81,11 @@
                             </tr>
                         </thead>
                         <tbody id="corpoTabela">
-
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
             </section>
+
             <section id="paginacao">
                 <div class="controle-paginacao">
                     <label for="pagina">Página</label>
@@ -98,8 +102,10 @@
                 </div>
             </section>
         </main>
+
         <script src="../js/validarLogin.js"></script>
         <script src="../js/dashboard.js"></script>
         <script src="../js/filtro.js"></script>
+        <script src="../js/logout.js"></script>
     </body>
 </html>
