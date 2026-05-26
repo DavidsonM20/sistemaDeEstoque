@@ -12,8 +12,6 @@ import model.CadastroProdutoModel;
 public class CadastroProdutosDAO {
 
     public boolean salvar(CadastroProdutoModel produto) {
-
-        // VALIDAÇÃO: garantir que código de barras não é nulo
         if (produto.getCodigoBarras() == null || produto.getCodigoBarras().trim().isEmpty()) {
             System.err.println("ERRO: Tentativa de salvar produto sem código de barras!");
             return false;
@@ -23,7 +21,7 @@ public class CadastroProdutosDAO {
                 + "(codigo_barras, nome_produto, fabricante, marca, data_fabricacao, data_vencimento, quantidade, valor, total, status) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = ConnectionFactory.getConnection(); 
+        try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, produto.getCodigoBarras());
@@ -38,7 +36,6 @@ public class CadastroProdutosDAO {
             stmt.setString(10, produto.getStatus());
 
             int rowsAffected = stmt.executeUpdate();
-            System.out.println("Linhas afetadas no INSERT: " + rowsAffected);
             return rowsAffected > 0;
 
         } catch (SQLException e) {
@@ -59,51 +56,45 @@ public class CadastroProdutosDAO {
             sql.append(" AND status = ?");
         }
         if (data != null && !data.isEmpty()) {
-            sql.append(" AND data_fabricacao = ?");
+            // CORRIGIDO: usa data_vencimento (coluna correta para filtro de data)
+            sql.append(" AND data_vencimento = ?");
         }
 
-        try (Connection conn = ConnectionFactory.getConnection(); 
-                PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
 
             int index = 1;
 
             if (nome != null && !nome.isEmpty()) {
                 stmt.setString(index++, "%" + nome.toLowerCase() + "%");
             }
-            
             if (tipo != null && !tipo.isEmpty()) {
                 stmt.setString(index++, tipo);
             }
-            
             if (data != null && !data.isEmpty()) {
                 stmt.setString(index++, data);
             }
 
-            ResultSet rs = stmt.executeQuery();
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    CadastroProdutoModel p = new CadastroProdutoModel();
+                    p.setCodigoBarras(rs.getString("codigo_barras"));
+                    p.setNomeProduto(rs.getString("nome_produto"));
+                    p.setFabricante(rs.getString("fabricante"));
+                    p.setMarca(rs.getString("marca"));
 
-            while (rs.next()) {
-                CadastroProdutoModel p = new CadastroProdutoModel();
+                    java.sql.Date dataFab = rs.getDate("data_fabricacao");
+                    java.sql.Date dataVen = rs.getDate("data_vencimento");
+                    p.setDataFabricacao(dataFab != null ? dataFab.toLocalDate().toString() : "");
+                    p.setDataVencimento(dataVen != null ? dataVen.toLocalDate().toString() : "");
 
-                String codigo = rs.getString("codigo_barras");
-                System.out.println("Lendo código do banco: " + codigo); // DEBUG
-                
-                p.setCodigoBarras(codigo);
-                p.setNomeProduto(rs.getString("nome_produto"));
-                p.setFabricante(rs.getString("fabricante"));
-                p.setMarca(rs.getString("marca"));
-                
-                // TRATAMENTO para datas nulas
-                java.sql.Date dataFab = rs.getDate("data_fabricacao");
-                java.sql.Date dataVen = rs.getDate("data_vencimento");
-                p.setDataFabricacao(dataFab != null ? dataFab.toLocalDate().toString() : "");
-                p.setDataVencimento(dataVen != null ? dataVen.toLocalDate().toString() : "");
-                
-                p.setQuantidade(rs.getLong("quantidade"));
-                p.setValor(rs.getString("valor"));
-                p.setTotal(rs.getString("total"));
-                p.setStatus(rs.getString("status"));
+                    p.setQuantidade(rs.getLong("quantidade"));
+                    p.setValor(rs.getString("valor"));
+                    p.setTotal(rs.getString("total"));
+                    p.setStatus(rs.getString("status"));
 
-                lista.add(p);
+                    lista.add(p);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

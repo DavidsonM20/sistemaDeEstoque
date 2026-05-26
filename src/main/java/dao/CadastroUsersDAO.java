@@ -33,7 +33,7 @@ public class CadastroUsersDAO {
             stmt.setString(14, user.getBairro());
             stmt.setString(15, user.getCidade());
             stmt.setString(16, user.getEstado());
-            stmt.setLong(17, user.getNumero());
+            stmt.setInt(17, (int) user.getNumero());
             stmt.setString(18, user.getComplemento());
 
             stmt.executeUpdate();

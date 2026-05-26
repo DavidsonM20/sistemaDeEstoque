@@ -1,26 +1,27 @@
 async function filtroEstoque() {
     try {
-        const nomePesquisado = document.getElementById("pesquisarNome").value.toLowerCase();
-        const tipoSelecionado = document.getElementById("tipoMovimentacao").value;
-        const dataSelecionada = document.getElementById("filtroData").value;
+        const nome = document.getElementById("pesquisarNome").value;
+        const tipo = document.getElementById("tipoMovimentacao").value;
+        const data = document.getElementById("filtroData").value;
 
-        const response = await fetch("http://localhost:8080/api/estoque");
+        const url = `http://localhost:8080/api/estoque?nome=${encodeURIComponent(nome)}&tipo=${encodeURIComponent(tipo)}&data=${encodeURIComponent(data)}`;
+        const response = await fetch(url);
         const dados = await response.json();
 
         const tabela = document.getElementById("corpoTabela");
         tabela.innerHTML = "";
 
         const filtrados = dados.filter(item => {
-            const matchNome = nomePesquisado === "" || item.nomeProduto.toLowerCase().includes(nomePesquisado);
-            const matchTipo = tipoSelecionado === "" || item.status === tipoSelecionado;
-            const matchData = dataSelecionada === "" || item.dataFabricacao === dataSelecionada;
+            const matchNome = nome === "" || item.nomeProduto.toLowerCase().includes(nome.toLowerCase());
+            const matchTipo = tipo === "" || item.status === tipo;
+            const matchData = data === "" || item.dataFabricacao === data;
 
             return matchNome && matchTipo && matchData;
         });
 
         filtrados.forEach(item => {
             const linha = `
-                _
+                <tr>
                     <td>${item.codigoBarras}</td>
                     <td>${item.nomeProduto}</td>
                     <td>${item.fabricante}</td>
@@ -31,7 +32,7 @@ async function filtroEstoque() {
                     <td>${parseFloat(item.valor).toFixed(2)}</td>
                     <td>${parseFloat(item.total).toFixed(2)}</td>
                     <td>${item.status}</td>
-                _
+                </tr>
             `;
             tabela.innerHTML += linha;
         });

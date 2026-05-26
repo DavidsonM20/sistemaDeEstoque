@@ -33,15 +33,20 @@ public class CadastroController extends HttpServlet {
         user.setCidade(request.getParameter("cidade"));
         user.setBairro(request.getParameter("bairro"));
         user.setEstado(request.getParameter("estado"));
-        user.setNumero(Long.parseLong((request.getParameter("numero"))));
+
+        String numeroStr = request.getParameter("numero");
+        if (numeroStr != null && !numeroStr.trim().isEmpty()) {
+            user.setNumero(Long.parseLong(numeroStr.trim()));
+        }
+
         user.setComplemento(request.getParameter("complemento"));
 
         CadastroUsersDAO dao = new CadastroUsersDAO();
 
         if (dao.cadastrar(user)) {
-            response.sendRedirect("dashboard.html");
+            response.sendRedirect(request.getContextPath() + "/pages/dashboard.html");
         } else {
-            response.sendRedirect("pages/cadastro.html");
+            response.sendRedirect(request.getContextPath() + "/pages/cadastro.html");
         }
     }
 }

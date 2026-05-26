@@ -6,16 +6,14 @@ async function validarLogin() {
         console.log("PERFIL FRONT: ", dado.perfil);
 
         if (!dado.perfil || dado.perfil.toLowerCase() !== "admin") {
-            // CORRIGIDO 1: getElementsByClassName não usa "." — era ".btn-menu", deve ser "btn-menu".
-            // CORRIGIDO 2: getElementsByClassName retorna uma coleção (HTMLCollection), não um elemento único.
-            //              É preciso iterar sobre os elementos para aplicar o estilo a cada um.
+            // getElementsByClassName retorna uma coleção - precisa iterar
+            // e NÃO usa ponto no nome da classe
             const botoes = document.getElementsByClassName("btn-menu");
             for (let i = 0; i < botoes.length; i++) {
                 botoes[i].style.display = "none";
             }
         }
     } catch (e) {
-        // CORRIGIDO 3: era "console.erro" — o método correto é "console.error".
         console.error("Erro ao verificar o perfil.", e);
     }
 }
