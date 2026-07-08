@@ -46,6 +46,113 @@ public class CadastroProdutosDAO {
         }
     }
 
+    public boolean atualizar(CadastroProdutoModel produto) {
+        if (produto.getId() <= 0) {
+            System.err.println("ERRO: Tentativa de atualizar produto sem id válido!");
+            return false;
+        }
+        if (produto.getCodigoBarras() == null || produto.getCodigoBarras().trim().isEmpty()) {
+            System.err.println("ERRO: Tentativa de atualizar produto sem código de barras!");
+            return false;
+        }
+
+        String sql = "UPDATE produtos SET "
+                + "codigo_barras = ?, nome_produto = ?, fabricante = ?, marca = ?, "
+                + "data_fabricacao = ?, data_vencimento = ?, quantidade = ?, valor = ?, "
+                + "total = ?, status = ?, prateleira = ?, estoque_minimo = ? "
+                + "WHERE id = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, produto.getCodigoBarras());
+            stmt.setString(2, produto.getNomeProduto());
+            stmt.setString(3, produto.getFabricante());
+            stmt.setString(4, produto.getMarca());
+
+            if (produto.getDataFabricacao() != null && !produto.getDataFabricacao().trim().isEmpty()) {
+                stmt.setDate(5, java.sql.Date.valueOf(produto.getDataFabricacao()));
+            } else {
+                stmt.setNull(5, java.sql.Types.DATE);
+            }
+
+            if (produto.getDataVencimento() != null && !produto.getDataVencimento().trim().isEmpty()) {
+                stmt.setDate(6, java.sql.Date.valueOf(produto.getDataVencimento()));
+            } else {
+                stmt.setNull(6, java.sql.Types.DATE);
+            }
+
+            stmt.setLong(7, produto.getQuantidade());
+            stmt.setString(8, produto.getValor());
+            stmt.setString(9, produto.getTotal());
+            stmt.setString(10, produto.getStatus());
+            stmt.setString(11, produto.getPrateleira());
+            stmt.setLong(12, produto.getEstoqueMinimo());
+            stmt.setInt(13, produto.getId());
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean excluir(int id) {
+        String sql = "DELETE FROM produtos WHERE id = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public CadastroProdutoModel buscarPorId(int id) {
+        String sql = "SELECT * FROM produtos WHERE id = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    CadastroProdutoModel p = new CadastroProdutoModel();
+                    p.setId(rs.getInt("id"));
+                    p.setCodigoBarras(rs.getString("codigo_barras"));
+                    p.setNomeProduto(rs.getString("nome_produto"));
+                    p.setFabricante(rs.getString("fabricante"));
+                    p.setMarca(rs.getString("marca"));
+
+                    java.sql.Date dataFab = rs.getDate("data_fabricacao");
+                    java.sql.Date dataVen = rs.getDate("data_vencimento");
+                    p.setDataFabricacao(dataFab != null ? dataFab.toLocalDate().toString() : "");
+                    p.setDataVencimento(dataVen != null ? dataVen.toLocalDate().toString() : "");
+
+                    p.setQuantidade(rs.getLong("quantidade"));
+                    p.setValor(rs.getString("valor"));
+                    p.setTotal(rs.getString("total"));
+                    p.setStatus(rs.getString("status"));
+                    p.setPrateleira(rs.getString("prateleira"));
+                    p.setEstoqueMinimo(rs.getLong("estoque_minimo"));
+                    return p;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public List<CadastroProdutoModel> listarComFiltro(String nome, String tipo, String data) {
         List<CadastroProdutoModel> lista = new ArrayList<>();
 
@@ -79,6 +186,7 @@ public class CadastroProdutosDAO {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     CadastroProdutoModel p = new CadastroProdutoModel();
+                    p.setId(rs.getInt("id"));
                     p.setCodigoBarras(rs.getString("codigo_barras"));
                     p.setNomeProduto(rs.getString("nome_produto"));
                     p.setFabricante(rs.getString("fabricante"));

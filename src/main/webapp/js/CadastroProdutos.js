@@ -58,3 +58,42 @@ function verificarBloqueioVencimento() {
 }
 
 nomeProduto.addEventListener("input", verificarBloqueioVencimento);
+
+// -------------------------------------------------------
+// Bloqueia data de vencimento anterior à data de fabricação
+// -------------------------------------------------------
+function verificarVencimentoAposFabricacao() {
+    if (!inputFabricacao.value || !inputVencimento.value) {
+        return true;
+    }
+
+    const fabricacao = new Date(inputFabricacao.value + "T00:00:00");
+    const vencimento = new Date(inputVencimento.value + "T00:00:00");
+
+    if (vencimento < fabricacao) {
+        alert("❌ Data de vencimento inválida! Ela não pode ser anterior à data de fabricação.");
+        inputVencimento.value = "";
+        return false;
+    }
+    return true;
+}
+
+// Sempre que a fabricação mudar, atualiza a data mínima permitida de vencimento
+inputFabricacao.addEventListener("change", function () {
+    if (this.value) {
+        inputVencimento.min = this.value;
+    }
+    verificarVencimentoAposFabricacao();
+});
+
+inputVencimento.addEventListener("change", verificarVencimentoAposFabricacao);
+
+// Garante que o formulário não seja enviado com datas inconsistentes
+const formCadastro = document.getElementById("formCadastro");
+if (formCadastro) {
+    formCadastro.addEventListener("submit", function (event) {
+        if (!verificarVencimentoAposFabricacao()) {
+            event.preventDefault();
+        }
+    });
+}

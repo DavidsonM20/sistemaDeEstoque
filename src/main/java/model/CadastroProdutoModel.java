@@ -4,6 +4,7 @@ public class CadastroProdutoModel {
 
     private int id;
     private String codigoBarras;
+
     private String nomeProduto;
     private String fabricante;
     private String marca;
@@ -15,6 +16,14 @@ public class CadastroProdutoModel {
     private String status;
     private String prateleira;
     private long estoqueMinimo;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getCodigoBarras() {
         return codigoBarras;

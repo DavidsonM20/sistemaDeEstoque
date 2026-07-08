@@ -43,6 +43,10 @@ function renderizarTabela() {
                 <td>${item.status}</td>
                 <td>${item.prateleira || '-'}</td>
                 <td>${situacao}</td>
+                <td class="coluna-acoes">
+                    <button type="button" class="btn-editar" data-id="${item.id}" title="Editar produto">✏️</button>
+                    <button type="button" class="btn-excluir" data-id="${item.id}" data-nome="${item.nomeProduto}" title="Excluir produto">🗑️</button>
+                </td>
             </tr>
         `;
         tabela.innerHTML += linha;
