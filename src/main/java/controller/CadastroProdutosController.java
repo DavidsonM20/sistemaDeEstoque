@@ -24,7 +24,7 @@ public class CadastroProdutosController extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/pages/cadastroProdutos.html?erro=codigo");
             return;
         }
-        
+
         produto.setCodigoBarras(codigoBarras);
         produto.setNomeProduto(request.getParameter("nomeProduto"));
         produto.setFabricante(request.getParameter("fabricante"));
@@ -35,12 +35,22 @@ public class CadastroProdutosController extends HttpServlet {
         produto.setValor(request.getParameter("valor"));
         produto.setTotal(request.getParameter("total"));
         produto.setStatus(request.getParameter("status"));
+        produto.setPrateleira(request.getParameter("prateleira"));
+
+        String estoqueMinStr = request.getParameter("estoqueMinimo");
+        if (estoqueMinStr != null && !estoqueMinStr.trim().isEmpty()) {
+            produto.setEstoqueMinimo(Long.parseLong(estoqueMinStr.trim()));
+        } else {
+            produto.setEstoqueMinimo(5);
+        }
 
         // DEBUG: imprimir o que está sendo salvo
         System.out.println("=== SALVANDO PRODUTO ===");
         System.out.println("Código Barras: " + produto.getCodigoBarras());
         System.out.println("Nome: " + produto.getNomeProduto());
         System.out.println("Status: " + produto.getStatus());
+        System.out.println("Prateleira: " + produto.getPrateleira());
+        System.out.println("Estoque Mínimo: " + produto.getEstoqueMinimo());
 
         CadastroProdutosDAO dao = new CadastroProdutosDAO();
 

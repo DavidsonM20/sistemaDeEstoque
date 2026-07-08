@@ -191,3 +191,117 @@ body {
 #btnProximo:hover {
     background-color: var(--primary-dark);
 }
+.card-alerta {
+    border: 2px solid #e74c3c;
+}
+
+.card-alerta .titulo-card {
+    color: #e74c3c;
+}
+
+.card-alerta .valor-card {
+    color: #e74c3c;
+}
+
+.btn-solicitacao {
+    margin-top: 12px;
+    padding: 8px 14px;
+    background-color: #e74c3c;
+    color: var(--white);
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.btn-solicitacao:hover {
+    background-color: #c0392b;
+}
+
+/* ---------- Modal Solicitação de Compra ---------- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-conteudo {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 25px;
+    width: 90%;
+    max-width: 750px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 20px var(--shadow-default);
+}
+
+.modal-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--primary-light);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.modal-cabecalho h2 {
+    color: var(--primary-dark);
+    font-size: 20px;
+}
+
+.btn-fechar-modal {
+    background: none;
+    border: none;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--gray-dark);
+}
+
+.btn-fechar-modal:hover {
+    color: #e74c3c;
+}
+
+.modal-data {
+    font-size: 13px;
+    color: var(--gray-dark);
+    margin-bottom: 15px;
+}
+
+#tabelaSolicitacao {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tabelaSolicitacao th,
+#tabelaSolicitacao td {
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+#tabelaSolicitacao th {
+    background-color: #e74c3c;
+    color: var(--white);
+}
+
+#tabelaSolicitacao tr:nth-child(even) {
+    background-color: var(--gray-light);
+}
+
+.modal-rodape {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}

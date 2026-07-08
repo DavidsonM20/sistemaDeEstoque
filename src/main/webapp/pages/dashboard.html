@@ -33,14 +33,20 @@
                 </div>
 
                 <div class="card-resumo">
-                    <h3 class="titulo-card">Total</h3>
+                    <h3 class="titulo-card">Total em Estoque</h3>
                     <p id="cardTotal" class="valor-card">0</p>
+                </div>
+
+                <div class="card-resumo card-alerta">
+                    <h3 class="titulo-card">Precisam Reposição</h3>
+                    <p id="cardReposicao" class="valor-card">0</p>
+                    <button type="button" id="btnGerarSolicitacao" class="btn-solicitacao">📋 Gerar Solicitação de Compra</button>
                 </div>
             </section>
 
             <section id="filtro">
                 <div class="grupo-filtro">
-                    <label for="filtroData">Data</label>
+                    <label for="filtroData">Data de Vencimento</label>
                     <input type="date" id="filtroData" class="input-filtro">
                 </div>
                 <div class="grupo-filtro">
@@ -78,6 +84,8 @@
                                 <th>Valor unitário</th>
                                 <th>Total</th>
                                 <th>Status</th>
+                                <th>Prateleira</th>
+                                <th>Situação</th>
                             </tr>
                         </thead>
                         <tbody id="corpoTabela">
@@ -89,12 +97,7 @@
             <section id="paginacao">
                 <div class="controle-paginacao">
                     <label for="pagina">Página</label>
-                    <select id="pagina">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                    </select>
+                    <select id="pagina"></select>
                 </div>
                 <div class="conteiner-btn">
                     <button id="btnVoltar" class="btn-voltar">Voltar</button>
@@ -103,9 +106,47 @@
             </section>
         </main>
 
+        <!-- Modal de Solicitação de Compra -->
+        <div id="modalSolicitacao" class="modal-overlay" style="display:none;">
+            <div class="modal-conteudo">
+                <div class="modal-cabecalho">
+                    <h2>Solicitação de Compra / Reposição de Estoque</h2>
+                    <button type="button" id="fecharModal" class="btn-fechar-modal">&times;</button>
+                </div>
+
+                <p id="modalDataGeracao" class="modal-data"></p>
+
+                <div id="modalSemItens" style="display:none;">
+                    <p>✔ Nenhum item precisa de reposição no momento.</p>
+                </div>
+
+                <div class="tabela-wrapper" id="modalTabelaWrapper">
+                    <table id="tabelaSolicitacao">
+                        <thead>
+                            <tr>
+                                <th>Código de Barras</th>
+                                <th>Produto</th>
+                                <th>Prateleira</th>
+                                <th>Qtd. Atual</th>
+                                <th>Estoque Mínimo</th>
+                                <th>Qtd. Sugerida p/ Compra</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpoTabelaSolicitacao"></tbody>
+                    </table>
+                </div>
+
+                <div class="modal-rodape">
+                    <button type="button" id="btnImprimirSolicitacao" class="btn-solicitacao">🖨️ Imprimir</button>
+                    <button type="button" id="btnBaixarSolicitacao" class="btn-solicitacao">⬇️ Baixar (.txt)</button>
+                </div>
+            </div>
+        </div>
+
         <script src="../js/validarLogin.js"></script>
         <script src="../js/dashboard.js"></script>
         <script src="../js/filtro.js"></script>
+        <script src="../js/solicitacaoCompra.js"></script>
         <script src="../js/Logout.js"></script>
     </body>
 </html>

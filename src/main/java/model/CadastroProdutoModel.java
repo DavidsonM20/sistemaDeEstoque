@@ -13,6 +13,8 @@ public class CadastroProdutoModel {
     private String valor;
     private String total;
     private String status;
+    private String prateleira;
+    private long estoqueMinimo;
 
     public String getCodigoBarras() {
         return codigoBarras;
@@ -92,5 +94,21 @@ public class CadastroProdutoModel {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPrateleira() {
+        return prateleira;
+    }
+
+    public void setPrateleira(String prateleira) {
+        this.prateleira = prateleira;
+    }
+
+    public long getEstoqueMinimo() {
+        return estoqueMinimo;
+    }
+
+    public void setEstoqueMinimo(long estoqueMinimo) {
+        this.estoqueMinimo = estoqueMinimo;
     }
 }

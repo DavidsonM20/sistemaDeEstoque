@@ -18,8 +18,8 @@ public class CadastroProdutosDAO {
         }
 
         String sql = "INSERT INTO produtos "
-                + "(codigo_barras, nome_produto, fabricante, marca, data_fabricacao, data_vencimento, quantidade, valor, total, status) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "(codigo_barras, nome_produto, fabricante, marca, data_fabricacao, data_vencimento, quantidade, valor, total, status, prateleira, estoque_minimo) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -34,6 +34,8 @@ public class CadastroProdutosDAO {
             stmt.setString(8, produto.getValor());
             stmt.setString(9, produto.getTotal());
             stmt.setString(10, produto.getStatus());
+            stmt.setString(11, produto.getPrateleira());
+            stmt.setLong(12, produto.getEstoqueMinimo());
 
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
@@ -56,7 +58,6 @@ public class CadastroProdutosDAO {
             sql.append(" AND status = ?");
         }
         if (data != null && !data.isEmpty()) {
-            // CORRIGIDO: usa data_vencimento (coluna correta para filtro de data)
             sql.append(" AND data_vencimento = ?");
         }
 
@@ -92,6 +93,8 @@ public class CadastroProdutosDAO {
                     p.setValor(rs.getString("valor"));
                     p.setTotal(rs.getString("total"));
                     p.setStatus(rs.getString("status"));
+                    p.setPrateleira(rs.getString("prateleira"));
+                    p.setEstoqueMinimo(rs.getLong("estoque_minimo"));
 
                     lista.add(p);
                 }

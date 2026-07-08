@@ -33,7 +33,9 @@ CREATE TABLE produtos (
     quantidade BIGINT,
     valor DECIMAL(10,2),
     total DECIMAL(10,2),
-    status VARCHAR(255)
+    status VARCHAR(255),
+    prateleira VARCHAR(100),
+    estoque_minimo BIGINT DEFAULT 5
 );
 
 -- Usuário admin padrão (senha: password - troque após o primeiro login)
@@ -50,6 +52,30 @@ VALUES (
     'admin@sistema.com',
     '(00) 00000-0000',
     'ADMIN',
+    '01000-000',
+    'Rua Principal',
+    1,
+    '',
+    'Centro',
+    'São Paulo',
+    'SP'
+);
+
+-- Usuário hugo com acesso limitado (senha: 1234)
+-- Hash bcrypt de '1234'
+INSERT INTO users (username, namefirst, sobreNome, matricula, CPF, psw, sexo, dtaNascimento, email, telefone, funcao, cep, endereco, numero, complemento, bairro, cidade, estado)
+VALUES (
+    'hugo',
+    'Hugo',
+    'Admin',
+    'HUG-001',
+    '111.111.111-11',
+    '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lh8a',
+    'Masculino',
+    '2000-01-01',
+    'hugo@sistema.com',
+    '(00) 00000-0000',
+    'ADMIN_LIMITADO',
     '01000-000',
     'Rua Principal',
     1,

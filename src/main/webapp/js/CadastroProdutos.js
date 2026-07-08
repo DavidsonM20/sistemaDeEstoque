@@ -1,11 +1,60 @@
+// Calcula total automaticamente
 document.getElementById("valor").addEventListener("input", calcular);
 document.getElementById("quantidade").addEventListener("input", calcular);
 
 function calcular() {
     let valor = parseFloat(document.getElementById("valor").value) || 0;
     let quantidade = parseInt(document.getElementById("quantidade").value) || 0;
-    
     document.getElementById("total").value = (valor * quantidade).toFixed(2);
 }
 
+// -------------------------------------------------------
+// Bloqueia data de fabricação anterior a 1 ano atrás
+// -------------------------------------------------------
+const inputFabricacao = document.getElementById("dataFabricacao");
+const inputVencimento = document.getElementById("dataVencimento");
+const nomeProduto = document.getElementById("nomeProduto");
 
+// Define data mínima de fabricação: 1 ano atrás
+function setMinFabricacao() {
+    const hoje = new Date();
+    const minDate = new Date(hoje.getFullYear() - 1, hoje.getMonth(), hoje.getDate());
+    const minStr = minDate.toISOString().split("T")[0];
+    inputFabricacao.min = minStr;
+    inputFabricacao.max = hoje.toISOString().split("T")[0];
+}
+setMinFabricacao();
+
+inputFabricacao.addEventListener("change", function () {
+    const hoje = new Date();
+    const minDate = new Date(hoje.getFullYear() - 1, hoje.getMonth(), hoje.getDate());
+    const escolhida = new Date(this.value + "T00:00:00");
+
+    if (escolhida < minDate) {
+        alert("❌ Data de fabricação inválida! Não é permitido cadastrar produtos com mais de 1 ano de fabricação.");
+        this.value = "";
+    }
+});
+
+// -------------------------------------------------------
+// Bloqueia data de vencimento quando o nome tiver "embalagem"
+// -------------------------------------------------------
+function verificarBloqueioVencimento() {
+    const nome = nomeProduto.value.toLowerCase();
+    const isEmbalagem = nome.includes("embalagem");
+
+    if (isEmbalagem) {
+        inputVencimento.disabled = true;
+        inputVencimento.value = "";
+        inputVencimento.title = "Data de vencimento não aplicável para embalagens";
+        inputVencimento.style.backgroundColor = "#e0e0e0";
+        inputVencimento.removeAttribute("required");
+    } else {
+        inputVencimento.disabled = false;
+        inputVencimento.title = "";
+        inputVencimento.style.backgroundColor = "";
+        inputVencimento.setAttribute("required", "required");
+    }
+}
+
+nomeProduto.addEventListener("input", verificarBloqueioVencimento);
